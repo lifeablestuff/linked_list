@@ -91,14 +91,21 @@ void popback(node* &nd){
 /* must pass nd by ref since we may need to insert at the
 root node and hence change the root addr */
 void insert(node* &nd, string s){
-    node x = nd;
+    node* x = nd;
     if (nd==nullptr){
         nd = new node(s,nullptr);
         return;
     }
-    while(x,next() != nullptr){
-        if(x,st() < s){
-            x,next() = new node(s,x->next);
+    while(x->next != nullptr){
+        if(x->st < s){
+            if(x->next==nullptr){
+
+                 x->next = new node(s,nullptr);
+                 return;
+        }
+        else{
+             x->next = new node(s,x->next);
+             return;
         }
         x = x->next;
         break;
