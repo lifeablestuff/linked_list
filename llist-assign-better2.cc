@@ -26,11 +26,10 @@ void walk(node* nd){
 
 int length(node* nd){
     int count = 0;
-    if (nd->next !=0){
-        walk(nd->next);
-        count+= 1;
+    if (nd->next != 0){
+        count = length(nd->next);
     }
-    return count;
+    return count+1;
 }
 
 /*
@@ -64,9 +63,17 @@ okay if one node already exists since we just add to the end of it.
 But if no node exists yet (root=0) then we must change root addr so we
 have to pass by ref also.*/
 
-void pushback(node* &nd, string s){ 
+void pushback(node* &nd, string s){
+    if (nd == 0){
+        nd = new node(s,nullptr);
+    }
+    else if(nd->next == 0){
+        nd->next = new node(s,nullptr);
+    }
+    else{
+        pushback(nd->next,s);
+    }
     
-
 }
 
 
@@ -91,27 +98,23 @@ void popback(node* &nd){
 /* must pass nd by ref since we may need to insert at the
 root node and hence change the root addr */
 void insert(node* &nd, string s){
-    node* x = nd;
+    // if no nodes in list
     if (nd==nullptr){
         nd = new node(s,nullptr);
         return;
     }
-    while(x->next != nullptr){
-        if(x->st < s){
-            if(x->next==nullptr){
-
-                 x->next = new node(s,nullptr);
-                 return;
+    if (nd->st < s){
+        // if nothing ahead
+        if (nd->next == 0){
+            nd->next = new node(s,nullptr);
         }
         else{
-             x->next = new node(s,x->next);
-             return;
+            insert(nd->next,s);
         }
-        x = x->next;
-        break;
     }
-
-
+    else{
+        pushfront(nd,s);
+    }
 
 }
 
@@ -157,6 +160,7 @@ int main(){
 		walk(root);
 		cout<<endl;
 	}
+    cout<<length(root)<<endl;
 	for (x=0; x<3 ; x++)
 	{
 		cout<<"popfront"<<endl;
