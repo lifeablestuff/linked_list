@@ -25,6 +25,7 @@ void walk(node* nd){
 }
 
 int length(node* nd){
+    //if a process is called before recursive call, it goes forward. if it is inside the call, it goes backwards
     int count = 0;
     if (nd->next != 0){
         count = length(nd->next);
