@@ -30,6 +30,12 @@ int length(node* nd){
         count = length(nd->next);
     }
     return count+1;
+    /*
+     * if (nd == 0){
+     * return 0;
+     * }
+     * return (1+length(nd->next));
+     */
 }
 
 /*
